@@ -20,3 +20,21 @@ makeCacheMatrix<- function(x = matrix()) {
        setInvMtr = setInvMtr,
        getInvMtr = getInvMtr)
 }
+
+# Function cacheSolve computes the inverse of the matrix
+# returned by makeCacheMatrix
+# Named Cache because if the inverse matrix has already been calculated
+# and if the matrix has not changed, then the retrieve the inverse
+# from the cache
+
+cacheSolve <- function(x, ...) {
+  my_inv <- x$getInvMtr()
+  if(!is.null(my_inv)) {
+    message("I'm getting cached data (data already calculated).")
+    return(my_inv)
+  }
+  data <- x$get()
+  my_inv <- solve(data)
+  x$setInvMtr(my_inv)
+  my_inv
+}
